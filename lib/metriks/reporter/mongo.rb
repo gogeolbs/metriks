@@ -130,10 +130,18 @@ module Metriks::Reporter
           options[:cname] = cname
         end
 
-        @session.with(safe: true) do |safe|
-          safe[@document].insert(options)
+        can_store = true
+
+        if metric.respond_to?(:store_zero_value) && !metric.store_zero_value
+          can_store = options[:value] <= 0
         end
-      end
-    end
-  end
-end
+
+        if can_store
+          @session.with(safe: true) do |safe|
+            safe[@document].insert(options)
+          end
+        end
+      end 
+    end # end send_metric
+  end # end class
+end # end module

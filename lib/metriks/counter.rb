@@ -6,6 +6,10 @@ module Metriks
   class Counter
     # sometimes I have multiple processes that count values, so I need to reset every time after submit
     attr_accessor :reset_on_submit
+
+    # Avoid store zero values keeping Mongo light
+    attr_accessor :store_zero_value
+
     # Public: Initialize a new Counter.
     def initialize()
       @count = Atomic.new(0)
