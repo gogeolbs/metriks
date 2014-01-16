@@ -4,8 +4,10 @@ module Metriks
   # Public: Counters are one of the simplest metrics whose only operations
   # are increment and decrement.
   class Counter
+    # sometimes I have multiple processes that count values, so I need to reset every time after submit
+    attr_accessor :reset_on_submit
     # Public: Initialize a new Counter.
-    def initialize
+    def initialize()
       @count = Atomic.new(0)
     end
 
