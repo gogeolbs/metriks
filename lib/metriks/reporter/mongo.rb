@@ -133,7 +133,7 @@ module Metriks::Reporter
         can_store = true
 
         if metric.respond_to?(:store_zero_value) && !metric.store_zero_value
-          can_store = options[:value] <= 0
+          can_store = options[:value] > 0
         end
 
         if can_store
